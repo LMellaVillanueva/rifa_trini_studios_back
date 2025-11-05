@@ -1,9 +1,10 @@
 from flask_cors import CORS
 from app import app
 from app.config.db_connection import connectToMySQL
+import os
 
 def create_app():
-    CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}}, supports_credentials=True) 
+    CORS(app, resources={r"/*": {"origins": os.getenv('ORIGIN')}}, supports_credentials=True) 
 
     from app.controllers.users import user_bp
     from app.controllers.vouchers import voucher_bp
