@@ -98,7 +98,7 @@ class User:
     @classmethod
     def get_all_users(cls):
         # all_users = connectToMySQL().query_db("SELECT u.id AS user_id,u.name,u.phone,(SELECT GROUP_CONCAT(DISTINCT r.number ORDER BY r.number) FROM rifa_number r WHERE r.user_id = u.id) AS numbers,(SELECT GROUP_CONCAT(CONCAT(v.id, '|', v.image_url, '|', v.verified) SEPARATOR ';') FROM voucher v WHERE v.user_id = u.id) AS vouchers FROM user u;")
-        all_users = connectToMySQL().query_db("SELECT u.id AS user_id, u.name, u.phone, GROUP_CONCAT(DISTINCT rn.number ORDER BY rn.number SEPARATOR ';') AS rifa_numbers, GROUP_CONCAT(DISTINCT CONCAT(v.id, '|', v.image_url, '|', v.verified) SEPARATOR ';') AS vouchers FROM user u LEFT JOIN rifa_number rn ON rn.user_id = u.id LEFT JOIN voucher v ON v.user_id = u.id GROUP BY u.id, u.name, u.phone;")
+        all_users = connectToMySQL().query_db("SELECT u.id AS user_id, u.name, u.phone, GROUP_CONCAT(DISTINCT rn.number ORDER BY rn.number SEPARATOR ';') AS rifa_numbers, GROUP_CONCAT(DISTINCT CONCAT(v.id, '|', v.image_url, '|', v.verified, '|', v.num_of_numbers) SEPARATOR ';') AS vouchers FROM user u LEFT JOIN rifa_number rn ON rn.user_id = u.id LEFT JOIN voucher v ON v.user_id = u.id GROUP BY u.id, u.name, u.phone;")
         return all_users
 
     @classmethod

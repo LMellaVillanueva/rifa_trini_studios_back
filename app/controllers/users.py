@@ -36,7 +36,8 @@ def register():
         data_voucher = {
             'image_url': upload_voucher['secure_url'],
             'user_id': user_existant['id'],
-            'verified': False
+            'verified': False,
+            'num_of_numbers': int(data_user['num_of_numbers'])
         }
         new_voucher_id = Voucher.insert_voucher(data_voucher)
 
@@ -59,7 +60,8 @@ def register():
         data_voucher = {
             'image_url': upload_voucher['secure_url'],
             'user_id': new_user_id,
-            'verified': False
+            'verified': False,
+            'num_of_numbers': int(data_user['num_of_numbers'])
         }
         new_voucher_id = Voucher.insert_voucher(data_voucher)
         if not new_voucher_id:

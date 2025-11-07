@@ -7,13 +7,14 @@ class Voucher:
         self.id = data['id']
         self.image_url = data['image_url']
         self.verified = data['verified']
+        self.num_of_numbers = data['num_of_numbers']
         self.user_id = data['user_id']
 
     @classmethod
     def insert_voucher(cls, data):
         data.setdefault('verified', None)
 
-        new_voucher_id = connectToMySQL().query_db('INSERT INTO voucher (image_url, verified, user_id) VALUES (%(image_url)s, %(verified)s, %(user_id)s);', data)
+        new_voucher_id = connectToMySQL().query_db('INSERT INTO voucher (image_url, verified, user_id, num_of_numbers) VALUES (%(image_url)s, %(verified)s, %(user_id)s, %(num_of_numbers)s);', data)
         return new_voucher_id
 
     @classmethod
@@ -22,9 +23,9 @@ class Voucher:
         return voucher_existant[0] if voucher_existant else None
 
     @classmethod
-    def verif_voucher(cls, id):
-        get_voucher = connectToMySQL().query_db('SELECT * FROM voucher WHERE id = %(id)s', { 'id': id })
-        connectToMySQL().query_db('UPDATE voucher SET verified = 1 WHERE id = %(id)s', { 'id': id })
+    def verif_voucher(cls, data):
+        get_voucher = connectToMySQL().query_db('SELECT * FROM voucher WHERE id = %(id)s', { 'id': data['id'] })
+        connectToMySQL().query_db('UPDATE voucher SET verified = 1 WHERE id = %(id)s', { 'id': data['id'] })
 
         user_id = get_voucher[0]['user_id']
 
@@ -32,9 +33,10 @@ class Voucher:
         if len(all_numbers) >= 200:
             return { 'full': 'No hay más números para comprar' }
             
+        print(data)
         numbers_for_user = []
             # La lista empieza vacía, por lo que si es == a 2 no entraría en el bucle
-        while len(numbers_for_user) < 2:
+        while len(numbers_for_user) < data['num_of_numbers']:
             random_number = random.randint(1, 200)
             number_used = connectToMySQL().query_db('SELECT * FROM rifa_number WHERE number = %(number)s;', { 'number': random_number })
             if not number_used:
