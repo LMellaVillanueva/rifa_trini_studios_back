@@ -49,8 +49,9 @@ def register():
         return jsonify({ 
             "user": user_existant['name'], 
             "phone": user_existant['phone'], 
+            "email": user_existant['email'],
             "voucher": user_voucher, 
-            "existant": 'Este usuario ya está registrado. Al verificar el comprobante se le asignarán números de rifa al mismo usuario.'
+            "existant": 'Al verificar el comprobante se le asignarán números de rifa al mismo usuario.'
             }), 200
     else:
         new_user_id = User.insert_user(data_user)
@@ -70,7 +71,12 @@ def register():
         get_user = User.get_user_by_id(new_user_id)
         user_voucher = Voucher.get_voucher_from_user(get_user['id'])
             
-        return jsonify({ "user": get_user['name'], "phone": get_user['phone'], "voucher": user_voucher }), 200
+        return jsonify({ 
+            "user": get_user['name'], 
+            "phone": get_user['phone'], 
+            "email": get_user['email'],
+            "voucher": user_voucher,
+            }), 200
 
 # Crear un admin MANUALMENTE
 @user_bp.route('/admin', methods=['POST'])

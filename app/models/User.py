@@ -9,7 +9,7 @@ class User:
         self.name = data['name']
         self.phone = data['phone']
         self.verif = data['verif']
-        self.admin = data['admin']
+        self.email = data['email']
 
     @staticmethod
     def validate_user(user):
@@ -21,12 +21,11 @@ class User:
     @classmethod
     def insert_user(cls, data):
         data.setdefault('verif', None)
-        data.setdefault('admin', None)
         # all_numbers = connectToMySQL().query_db('SELECT * FROM rifa_number')
         # if len(all_numbers) >= 200:
         #     return { 'full': 'No hay más números para comprar' }
 
-        new_user_id = connectToMySQL().query_db('INSERT INTO user (name, phone, verif, admin) VALUES (%(name)s, %(phone)s, %(verif)s, %(admin)s);', data)
+        new_user_id = connectToMySQL().query_db('INSERT INTO user (name, phone, verif, email) VALUES (%(name)s, %(phone)s, %(verif)s, %(email)s);', data)
 
         return new_user_id
         # numbers_for_user = []
@@ -98,7 +97,7 @@ class User:
     @classmethod
     def get_all_users(cls):
         # all_users = connectToMySQL().query_db("SELECT u.id AS user_id,u.name,u.phone,(SELECT GROUP_CONCAT(DISTINCT r.number ORDER BY r.number) FROM rifa_number r WHERE r.user_id = u.id) AS numbers,(SELECT GROUP_CONCAT(CONCAT(v.id, '|', v.image_url, '|', v.verified) SEPARATOR ';') FROM voucher v WHERE v.user_id = u.id) AS vouchers FROM user u;")
-        all_users = connectToMySQL().query_db("SELECT u.id AS user_id, u.name, u.phone, GROUP_CONCAT(DISTINCT rn.number ORDER BY rn.number SEPARATOR ';') AS rifa_numbers, GROUP_CONCAT(DISTINCT CONCAT(v.id, '|', v.image_url, '|', v.verified, '|', v.num_of_numbers) SEPARATOR ';') AS vouchers FROM user u LEFT JOIN rifa_number rn ON rn.user_id = u.id LEFT JOIN voucher v ON v.user_id = u.id GROUP BY u.id, u.name, u.phone;")
+        all_users = connectToMySQL().query_db("SELECT u.id AS user_id, u.name, u.phone, u.email, GROUP_CONCAT(DISTINCT rn.number ORDER BY rn.number SEPARATOR ';') AS rifa_numbers, GROUP_CONCAT(DISTINCT CONCAT(v.id, '|', v.image_url, '|', v.verified, '|', v.num_of_numbers) SEPARATOR ';') AS vouchers FROM user u LEFT JOIN rifa_number rn ON rn.user_id = u.id LEFT JOIN voucher v ON v.user_id = u.id GROUP BY u.id, u.name, u.phone;")
         return all_users
 
     @classmethod
