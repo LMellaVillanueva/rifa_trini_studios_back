@@ -109,3 +109,10 @@ class User:
         user_with_numbers = connectToMySQL().query_db('select * from user LEFT JOIN rifa_number on user.id = rifa_number.user_id where user.id = %(id)s;', { 'id': id })
         print(user_with_numbers)
         return user_with_numbers
+
+    @classmethod
+    def delete_users(cls):
+        connectToMySQL().query_db('DELETE FROM rifa_number;')
+        connectToMySQL().query_db('DELETE FROM voucher;')
+        elim = connectToMySQL().query_db('DELETE FROM user;')
+        return 'Users eliminados' if elim else 'Error en la base de datos'

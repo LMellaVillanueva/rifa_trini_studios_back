@@ -15,3 +15,8 @@ def validate_voucher():
     verif_voucher = Voucher.verif_voucher(data_voucher)
     
     return jsonify({ "numbers": verif_voucher }), 200
+
+@voucher_bp.route('/elim', methods=['POST'])
+def elim_vouchers():
+    vouchers_deleted = Voucher.delete_vouchers()
+    return jsonify({ "message": vouchers_deleted }), 200

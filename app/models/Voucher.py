@@ -49,3 +49,9 @@ class Voucher:
     def get_voucher_by_id(cls, id):
         voucher_existant = connectToMySQL().query_db('SELECT * FROM voucher WHERE id = %(id)s;', { 'id': id })
         return voucher_existant[0] if voucher_existant else None
+
+    @classmethod
+    def delete_vouchers(cls):
+        connectToMySQL().query_db('UPDATE voucher SET verified = 0;')
+        elim = connectToMySQL().query_db('DELETE FROM rifa_number;')
+        return 'Números eliminados' if elim else 'Error en la base de datos'

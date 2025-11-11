@@ -135,3 +135,8 @@ def all_users():
     if not all_users:
         return jsonify({ "error": 'No hay users registrados' }), 404
     return jsonify({ "all_users": all_users }), 200
+
+@user_bp.route('/elim', methods=['POST'])
+def elim_users():
+    users_deleted = User.delete_users()
+    return jsonify({ "message": users_deleted }), 200
