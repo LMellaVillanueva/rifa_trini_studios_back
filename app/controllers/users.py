@@ -140,3 +140,8 @@ def all_users():
 def elim_users():
     users_deleted = User.delete_users()
     return jsonify({ "message": users_deleted }), 200
+
+@user_bp.route('/delete_numbers/<id>', methods=['GET'])
+def delete_numbers(id):
+    numbers_deleted = User.delete_numbers_of_user(id)
+    return jsonify({ "message": numbers_deleted }), 200
