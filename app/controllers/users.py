@@ -3,6 +3,7 @@ from app import app
 from app.models.User import User
 from app.models.Admin import Admin
 from app.models.Voucher import Voucher
+from app.models.Rifa_number import Rifa_number
 import uuid
 import cloudinary.uploader
 from app.config.cloud_config import configure_cloudinary
@@ -19,6 +20,10 @@ ALLOWED_PDF = {'pdf'}
 
 @user_bp.route('/register', methods=['GET', 'POST'])
 def register():
+    all_rifa_numbers = Rifa_number.all_numbers()
+    if not all_rifa_numbers:
+        return jsonify({ "message": 'No hay más números para comprar' }), 201
+
     data_user = request.form.to_dict()
     voucher = request.files['voucher']
     if not voucher:

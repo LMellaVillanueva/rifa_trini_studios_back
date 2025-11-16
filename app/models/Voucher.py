@@ -31,7 +31,7 @@ class Voucher:
 
         all_numbers = connectToMySQL().query_db('SELECT * FROM rifa_number')
         if len(all_numbers) >= 200:
-            return { 'full': 'No hay más números para comprar' }
+            return 'No hay más números para comprar'
             
         numbers_for_user = []
             # La lista empieza vacía, por lo que si es == a 2 no entraría en el bucle

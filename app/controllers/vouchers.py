@@ -13,8 +13,11 @@ def validate_voucher():
         return jsonify({ "error": 'Este voucher no existe' }), 404
     
     verif_voucher = Voucher.verif_voucher(data_voucher)
-    
-    return jsonify({ "numbers": verif_voucher }), 200
+    print('MESSAGE', verif_voucher)
+
+    if isinstance(verif_voucher, str):
+        return jsonify({ "full": verif_voucher }), 200
+    else: return jsonify({ "numbers": verif_voucher }), 200
 
 @voucher_bp.route('/elim', methods=['POST'])
 def elim_vouchers():
