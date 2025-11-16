@@ -33,7 +33,6 @@ class Voucher:
         if len(all_numbers) >= 200:
             return { 'full': 'No hay más números para comprar' }
             
-        print(data)
         numbers_for_user = []
             # La lista empieza vacía, por lo que si es == a 2 no entraría en el bucle
         while len(numbers_for_user) < data['num_of_numbers']:

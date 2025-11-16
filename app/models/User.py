@@ -114,17 +114,19 @@ class User:
     def delete_users(cls):
         connectToMySQL().query_db('DELETE FROM rifa_number;')
         connectToMySQL().query_db('DELETE FROM voucher;')
-        elim = connectToMySQL().query_db('DELETE FROM user;')
-        return 'Users eliminados' if elim else 'Error en la base de datos'
+        connectToMySQL().query_db('DELETE FROM user;')
+        return 'Users eliminados' 
 
     @classmethod
     def delete_numbers_of_user(cls, id):
         connection = connectToMySQL()
         try:
             connection.query_db('UPDATE voucher SET verified = 0 WHERE user_id = %(id)s;', { 'id': id })
-            delete_numbers = connectToMySQL().query_db('DELETE FROM rifa_number WHERE user_id = %(id)s;', { 'id': id })
+            connectToMySQL().query_db('DELETE FROM rifa_number WHERE user_id = %(id)s;', { 'id': id })
 
-            return 'Números eliminados con éxito' if delete_numbers else 'Error en la base de datos'
+            return 'Números eliminados con éxito' 
         
         except Exception:
             return 'Error en la base de datos'
+
+    
