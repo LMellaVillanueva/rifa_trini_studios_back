@@ -10,6 +10,7 @@ def create_app():
     from app.controllers.vouchers import voucher_bp
     app.register_blueprint(user_bp, url_prefix='/user')
     app.register_blueprint(voucher_bp, url_prefix='/voucher')
+    return app
 
 create_app()
 
