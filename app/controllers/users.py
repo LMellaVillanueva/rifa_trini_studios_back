@@ -1,5 +1,4 @@
 from flask import jsonify, request, Blueprint
-from app import app
 from app.models.User import User
 from app.models.Admin import Admin
 from app.models.Voucher import Voucher

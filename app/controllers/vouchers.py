@@ -1,6 +1,5 @@
 from flask import jsonify, Blueprint, request
 from app.models.Voucher import Voucher
-from app import app
 
 voucher_bp = Blueprint('voucher_bp', __name__)
 
