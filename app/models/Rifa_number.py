@@ -10,4 +10,4 @@ class Rifa_number:
     def all_numbers(cls):
         all_numbers = connectToMySQL().query_db('SELECT * FROM rifa_number')
         
-        return False if len(all_numbers) >= 200 else True
+        return False if len(all_numbers) >= 1000 else True

@@ -21,57 +21,10 @@ class User:
     @classmethod
     def insert_user(cls, data):
         data.setdefault('verif', None)
-        # all_numbers = connectToMySQL().query_db('SELECT * FROM rifa_number')
-        # if len(all_numbers) >= 200:
-        #     return { 'full': 'No hay más números para comprar' }
 
         new_user_id = connectToMySQL().query_db('INSERT INTO user (name, phone, verif, email) VALUES (%(name)s, %(phone)s, %(verif)s, %(email)s);', data)
 
         return new_user_id
-        # numbers_for_user = []
-
-        # while True:
-        #     random_number = random.randint(1, 200)
-        #     number_used = connectToMySQL().query_db('SELECT * FROM rifa_number WHERE number = %(number)s;', { 'number': random_number })
-        
-        #     if not number_used:
-        #         connectToMySQL().query_db('INSERT INTO rifa_number (number, user_id) VALUES (%(number)s, %(user_id)s);', { 'number': random_number, 'user_id': new_user_id })
-        #         numbers_for_user.append(random_number)
-
-        #     if len(numbers_for_user) == 2:
-        #         return { 'user': get_user['name'], 'numbers': numbers_for_user, 'phone': get_user['phone'], 'voucher': get_user['voucher'] }     
-
-
-    # @classmethod
-    # def new_numbers_for_user(cls, user_id):
-    #     all_numbers = connectToMySQL().query_db('SELECT * FROM rifa_number')
-    #     if len(all_numbers) >= 200:
-    #         return { 'full': 'No hay más números para comprar' }
-
-    #     numbers_for_user = []
-    #     while True:
-    #         random_number = random.randint(1, 200)
-    #         number_used = connectToMySQL().query_db('SELECT * FROM  rifa_number WHERE number = %(number)s', { 'number': random_number })
-
-    #         if not number_used:
-    #             connectToMySQL().query_db('INSERT INTO rifa_number (number, user_id) VALUES (%(number)s, %(user_id)s);', { 'number': random_number, 'user_id': user_id })
-    #             numbers_for_user.append(random_number)
-
-    #         if len(numbers_for_user) == 2:
-    #             return numbers_for_user 
-
-    # Concatenar el nuevo voucher a un user
-    # @classmethod
-    # def concat_voucher(cls, id, new_voucher):
-    #     connectToMySQL().query_db( """
-    #     UPDATE user
-    #     SET voucher = CASE
-    #         WHEN voucher IS NULL OR voucher = '' THEN %(new_voucher)s
-    #         ELSE CONCAT(voucher, ',', %(new_voucher)s)
-    #     END,
-    #     verif = 0
-    #     WHERE id = %(id)s;
-    # """, { 'id': id, 'new_voucher': new_voucher })
 
     @classmethod
     def get_user_by_phone(cls, phone):

@@ -30,13 +30,13 @@ class Voucher:
         user_id = get_voucher[0]['user_id']
 
         all_numbers = connectToMySQL().query_db('SELECT * FROM rifa_number')
-        if len(all_numbers) >= 200:
+        if len(all_numbers) >= 1000:
             return 'No hay más números para comprar'
             
         numbers_for_user = []
             # La lista empieza vacía, por lo que si es == a 2 no entraría en el bucle
         while len(numbers_for_user) < data['num_of_numbers']:
-            random_number = random.randint(1, 200)
+            random_number = random.randint(1, 1000)
             number_used = connectToMySQL().query_db('SELECT * FROM rifa_number WHERE number = %(number)s;', { 'number': random_number })
             if not number_used:
                 connectToMySQL().query_db('INSERT INTO rifa_number (number, user_id) VALUES (%(number)s, %(user_id)s);', { 'number': random_number, 'user_id': user_id })
